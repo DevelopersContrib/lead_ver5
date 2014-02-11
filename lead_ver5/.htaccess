@@ -1,0 +1,37 @@
+<IfModule mod_rewrite.c>
+  Options +FollowSymLinks
+  RewriteEngine on
+
+  # Rewrite URLs of the form 'x' to the form 'index.php?q=x'.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)\index.html$ index.php
+  RewriteRule ^about.html\/?$ about.php
+  RewriteRule ^contactus.html\/?$ contact.php
+  RewriteRule ^contact.html\/?$ contact.php   
+  RewriteRule ^sponsor.html\/?$ sponsor.php   
+  RewriteRule ^staffing.html\/?$ staffing.php   
+  RewriteRule ^services.html\/?$ services.php   
+  RewriteRule ^terms.html\/?$ terms.php   
+  RewriteRule ^privacy.html\/?$ privacy.php   
+  RewriteRule ^sitemap.html\/?$ sitemap.php   
+ 
+  RewriteCond %{HTTP_USER_AGENT} ^BackWeb [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^Bandit [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^BatchFTP [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^BecomeBot [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [NC]
+  # why not come visit me directly?
+  RewriteCond %{HTTP_REFERER} \.opendirviewer\. [NC,OR]
+  # this prevents stoopid cross-site discovery attacks..
+  RewriteCond %{THE_REQUEST} \?\ HTTP/ [NC,OR]
+  # please stop pretending to be the Googlebot..
+  RewriteCond %{HTTP_REFERER} users\.skynet\.be.* [NC,OR]
+  RewriteCond %{QUERY_STRING} \=\|w\| [NC,OR]
+  RewriteCond %{THE_REQUEST} etc/passwd [NC,OR]
+  RewriteCond %{REQUEST_URI} owssvr\.dll [NC,OR]
+  RewriteCond %{QUERY_STRING} \=\|w\| [NC,OR]
+  RewriteCond %{THE_REQUEST} \/\*\ HTTP/ [NC,OR]
+  RewriteRule . abuse.txt [L]
+</IfModule>
